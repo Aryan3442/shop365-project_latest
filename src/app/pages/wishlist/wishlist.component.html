@@ -1,0 +1,16 @@
+<section class="container page">
+  <h1 class="animate-in">Your Wishlist</h1>
+
+  @if (products().length > 0) {
+    <div class="grid">
+      @for (p of products(); track p.id) {
+        <app-product-card [product]="p" class="animate-in"></app-product-card>
+      }
+    </div>
+  } @else {
+    <div class="empty animate-in">
+      <p>Your wishlist is empty.</p>
+      <a routerLink="/" class="btn btn-primary">Start Shopping</a>
+    </div>
+  }
+</section>

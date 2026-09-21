@@ -1,0 +1,65 @@
+.page { padding: 40px 0 70px; }
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+}
+.main-img {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  aspect-ratio: 4/5;
+  background: var(--color-surface);
+  img { width: 100%; height: 100%; object-fit: cover; }
+  &.dim img { filter: grayscale(35%) brightness(0.55); }
+}
+.oos-tag {
+  position: absolute; top: 16px; left: 16px;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.brand { color: var(--color-muted); text-transform: uppercase; font-size: 12px; letter-spacing: .06em; margin: 0; }
+h1 { font-size: 28px; margin: 6px 0 12px; }
+.badges { display: flex; gap: 8px; margin-bottom: 14px; }
+.price-row { display: flex; align-items: baseline; gap: 12px; margin-bottom: 18px; }
+.price { font-size: 26px; font-weight: 800; }
+.mrp { color: var(--color-muted); text-decoration: line-through; font-size: 16px; }
+.desc { color: var(--color-muted); line-height: 1.6; margin-bottom: 24px; }
+.option-block { margin-bottom: 20px; }
+.label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--color-muted); margin-bottom: 10px; }
+.swatches { display: flex; gap: 10px; }
+.swatch {
+  width: 30px; height: 30px; border-radius: 50%;
+  border: 2px solid var(--color-border);
+  transition: var(--transition);
+  &.active { border-color: var(--color-accent); transform: scale(1.15); }
+}
+.sizes { display: flex; gap: 8px; flex-wrap: wrap; }
+.size-btn {
+  min-width: 44px; padding: 9px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 13px;
+  &.active { border-color: var(--color-accent); color: var(--color-accent); }
+}
+.qty-stepper {
+  display: inline-flex; align-items: center; gap: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 6px 16px;
+  button { background: none; border: none; color: var(--color-text); font-size: 18px; }
+}
+.cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 10px; }
+.wish-btn {
+  background: none; border: none; color: var(--color-muted); font-size: 13px; font-weight: 600;
+  &.active { color: var(--color-accent-2); }
+}
+.notify-confirm { color: var(--color-accent); font-size: 13px; font-weight: 600; }
+
+@media (max-width: 860px) { .layout { grid-template-columns: 1fr; gap: 24px; } }

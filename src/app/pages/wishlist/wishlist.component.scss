@@ -1,0 +1,10 @@
+.page { padding: 40px 0 70px; }
+h1 { font-size: 28px; margin-bottom: 28px; }
+.grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+.empty {
+  text-align: center;
+  padding: 60px 0;
+  color: var(--color-muted);
+  p { margin-bottom: 18px; }
+}
+@media (max-width: 960px) { .grid { grid-template-columns: repeat(2, 1fr); } }

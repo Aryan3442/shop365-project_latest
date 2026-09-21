@@ -1,0 +1,39 @@
+@if (!orderPlaced) {
+  <section class="container page">
+    <h1 class="animate-in">Checkout</h1>
+    <div class="layout">
+      <form class="address-form animate-in" (submit)="$event.preventDefault()">
+        <h3>Shipping Address</h3>
+        <input placeholder="Full Name" [(ngModel)]="address.name" name="name" />
+        <input placeholder="Phone Number" [(ngModel)]="address.phone" name="phone" />
+        <input placeholder="Address Line" [(ngModel)]="address.line1" name="line1" />
+        <div class="row-2">
+          <input placeholder="City" [(ngModel)]="address.city" name="city" />
+          <input placeholder="Pincode" [(ngModel)]="address.pincode" name="pincode" />
+        </div>
+      </form>
+
+      <div class="summary animate-in">
+        <h3>Order Summary</h3>
+        @for (item of cart.items(); track item.product.id + item.size) {
+          <div class="line"><span>{{ item.product.name }} × {{ item.qty }}</span><span>₹{{ item.product.price * item.qty | number }}</span></div>
+        }
+        <div class="line total"><span>Total</span><span>₹{{ total | number }}</span></div>
+
+        <button class="btn btn-primary full" [disabled]="processing || cart.items().length === 0" (click)="payNow()">
+          {{ processing ? 'Processing…' : 'Pay ₹' + (total | number) }}
+        </button>
+        <p class="secure-note">🔒 Secured payments via Razorpay</p>
+      </div>
+    </div>
+  </section>
+} @else {
+  <section class="container page success">
+    <div class="animate-in">
+      <div class="check">✓</div>
+      <h1>Order Placed!</h1>
+      <p>Thanks for shopping with Shop365 — a confirmation has been sent to your email.</p>
+      <button class="btn btn-primary" (click)="backHome()">Continue Shopping</button>
+    </div>
+  </section>
+}

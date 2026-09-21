@@ -1,0 +1,54 @@
+<header class="nav">
+  <div class="container nav-inner">
+    <a routerLink="/" class="logo" aria-label="Shop365 home">
+      <span class="brand-bag" aria-hidden="true">
+        <span class="bag-handle"></span>
+        <span class="bag-mark">s</span>
+      </span>
+      <span class="brand-wordmark" aria-label="Shop365">
+        <span class="brand-wordmark-main">shop</span>
+        <span class="brand-wordmark-accent">365</span>
+      </span>
+    </a>
+
+    <nav class="links" [class.open]="menuOpen">
+      <a routerLink="/category/him" routerLinkActive="active">HIM</a>
+      <a routerLink="/category/her" routerLinkActive="active">HER</a>
+      <a routerLink="/" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active" fragment="hot">TRENDING</a>
+    </nav>
+
+    <div class="actions">
+      <button class="theme-toggle" (click)="theme.toggle()" [attr.aria-label]="theme.current() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'">
+        <span>{{ theme.current() === 'dark' ? '☀️' : '🌙' }}</span>
+        <small>{{ theme.current() === 'dark' ? 'Light' : 'Dark' }}</small>
+      </button>
+
+      <a routerLink="/wishlist" class="icon-btn" title="Wishlist">
+        ♡
+        @if (wishlist.count() > 0) {
+          <span class="dot">{{ wishlist.count() }}</span>
+        }
+      </a>
+      <a routerLink="/cart" class="icon-btn" title="Cart">
+        🛍
+        @if (cart.count() > 0) {
+          <span class="dot">{{ cart.count() }}</span>
+        }
+      </a>
+
+      @if (auth.isLoggedIn) {
+        <a routerLink="/wishlist" class="avatar">
+          @if (auth.currentUser()?.photoUrl) {
+            <img [src]="auth.currentUser()?.photoUrl" alt="profile" />
+          } @else {
+            <span>{{ auth.currentUser()?.name?.charAt(0) }}</span>
+          }
+        </a>
+      } @else {
+        <a routerLink="/login" class="btn btn-primary login-btn">Login</a>
+      }
+
+      <button class="burger" (click)="toggleMenu()" aria-label="menu">☰</button>
+    </div>
+  </div>
+</header>

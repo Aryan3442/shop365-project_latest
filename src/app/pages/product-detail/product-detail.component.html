@@ -1,0 +1,81 @@
+@if (product) {
+  <section class="container page">
+    <div class="layout">
+      <div class="gallery animate-in">
+        <div class="main-img" [class.dim]="product.outOfStock">
+          <img [src]="product.images[0]" [alt]="product.name" />
+          @if (product.outOfStock) {
+            <div class="oos-tag">Out of Stock</div>
+          }
+        </div>
+      </div>
+
+      <div class="info animate-in">
+        <p class="brand">{{ product.brand }}</p>
+        <h1>{{ product.name }}</h1>
+
+        <div class="badges">
+          @if (product.hotSelling) { <span class="badge badge-hot">🔥 Hot Selling</span> }
+          @if (discountPct() > 0) { <span class="badge badge-sale">{{ discountPct() }}% OFF</span> }
+        </div>
+
+        <div class="price-row">
+          <span class="price">₹{{ product.price | number }}</span>
+          @if (product.mrp > product.price) { <span class="mrp">₹{{ product.mrp | number }}</span> }
+        </div>
+
+        <p class="desc">{{ product.description }}</p>
+
+        @if (product.colors.length) {
+          <div class="option-block">
+            <p class="label">Color</p>
+            <div class="swatches">
+              @for (c of product.colors; track c) {
+                <button class="swatch" [style.background]="c" [class.active]="selectedColor === c" (click)="selectedColor = c"></button>
+              }
+            </div>
+          </div>
+        }
+
+        <div class="option-block">
+          <p class="label">Size</p>
+          <div class="sizes">
+            @for (s of product.sizes; track s) {
+              <button class="size-btn" [class.active]="selectedSize === s" (click)="selectedSize = s">{{ s }}</button>
+            }
+          </div>
+        </div>
+
+        @if (!product.outOfStock) {
+          <div class="option-block">
+            <p class="label">Quantity</p>
+            <div class="qty-stepper">
+              <button (click)="qty = Math.max(1, qty - 1)">−</button>
+              <span>{{ qty }}</span>
+              <button (click)="qty = qty + 1">+</button>
+            </div>
+          </div>
+        }
+
+        <div class="cta-row">
+          @if (product.outOfStock) {
+            @if (!notifyMeSubmitted) {
+              <button class="btn btn-disabled" disabled>Out of Stock</button>
+              <button class="btn btn-outline" (click)="notifyMe()">Notify Me</button>
+            } @else {
+              <p class="notify-confirm">✓ We'll email you the moment it's back.</p>
+            }
+          } @else {
+            <button class="btn btn-primary" (click)="addToCart()">{{ justAdded ? 'Added ✓' : 'Add to Cart' }}</button>
+            <button class="btn btn-outline" (click)="buyNow()">Buy Now</button>
+          }
+          <button class="wish-btn" [class.active]="wishlist.isWishlisted(product.id)" (click)="wishlist.toggle(product)">
+            {{ wishlist.isWishlisted(product.id) ? '♥ Wishlisted' : '♡ Add to Wishlist' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+} @else {
+  <div class="container page"><p>Product not found.</p></div>
+}

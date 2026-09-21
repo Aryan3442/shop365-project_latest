@@ -1,0 +1,30 @@
+<section class="container page">
+  <div class="head animate-in">
+    <h1>{{ gender === 'him' ? 'For Him' : 'For Her' }}</h1>
+    <p>{{ products.length }} products</p>
+  </div>
+
+  <div class="toolbar animate-in">
+    <div class="chips">
+      <button class="chip" [class.active]="activeCategory === 'All'" (click)="selectCategory('All')">All</button>
+      @for (c of categories; track c) {
+        <button class="chip" [class.active]="activeCategory === c" (click)="selectCategory(c)">{{ c }}</button>
+      }
+    </div>
+
+    <select class="sort" (change)="onSortChange($any($event.target).value)">
+      <option value="popular">Sort: Popular</option>
+      <option value="price-asc">Price: Low to High</option>
+      <option value="price-desc">Price: High to Low</option>
+    </select>
+  </div>
+
+  <div class="grid">
+    @for (p of products; track p.id) {
+      <app-product-card [product]="p" class="animate-in"></app-product-card>
+    }
+    @empty {
+      <p class="empty">No products found in this category yet.</p>
+    }
+  </div>
+</section>

@@ -1,0 +1,68 @@
+<section class="container page">
+  <h1 class="animate-in">Your Cart</h1>
+
+  @if (cart.items().length > 0) {
+    <div class="layout">
+      <div class="items">
+        @for (item of cart.items(); track item.product.id + item.size + item.color; let i = $index) {
+          <div class="row animate-in">
+            <img [src]="item.product.images[0]" [alt]="item.product.name" />
+            <div class="row-info">
+              <h3>{{ item.product.name }}</h3>
+              <p class="meta">Size: {{ item.size }} @if (item.color) { • <span class="swatch" [style.background]="item.color"></span> }</p>
+              <div class="qty-stepper">
+                <button (click)="cart.updateQty(i, item.qty - 1)">−</button>
+                <span>{{ item.qty }}</span>
+                <button (click)="cart.updateQty(i, item.qty + 1)">+</button>
+              </div>
+            </div>
+            <div class="row-price">
+              <p>₹{{ item.product.price * item.qty | number }}</p>
+              <button class="remove" (click)="cart.remove(i)">Remove</button>
+            </div>
+          </div>
+        }
+      </div>
+
+      <div class="summary animate-in">
+        <h3>Order Summary</h3>
+        <div class="line"><span>Subtotal</span><span>₹{{ cart.subtotal() | number }}</span></div>
+
+        <div class="coupon-box">
+          <label for="couponCode">Apply Coupon</label>
+          <div class="coupon-row">
+            <input id="couponCode" [(ngModel)]="couponInput" type="text" placeholder="Enter coupon code" maxlength="20" />
+            <div class="coupon-actions">
+              <button type="button" class="btn btn-primary small" (click)="applyCoupon()">Apply</button>
+              @if (cart.couponCode()) {
+                <button type="button" class="btn btn-outline small" (click)="removeCoupon()">Remove</button>
+              }
+            </div>
+          </div>
+          @if (cart.couponCode()) {
+            <small class="coupon-status">Coupon applied: {{ cart.couponCode() }}</small>
+          }
+        </div>
+
+        @if (couponDiscount() > 0) {
+          <div class="line discount"><span>Coupon Discount</span><span>-₹{{ couponDiscount() | number }}</span></div>
+        }
+
+        <div class="line"><span>Shipping</span><span>{{ shipping() === 0 ? 'FREE' : '₹' + shipping() }}</span></div>
+        <div class="line total"><span>Total</span><span>₹{{ total() | number }}</span></div>
+        <a routerLink="/checkout" class="btn btn-primary full">Proceed to Checkout</a>
+      </div>
+
+      @if (popupVisible) {
+        <div class="coupon-popup" role="alert" aria-live="polite">
+          {{ popupMessage }}
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="empty animate-in">
+      <p>Your cart is empty.</p>
+      <a routerLink="/" class="btn btn-primary">Continue Shopping</a>
+    </div>
+  }
+</section>

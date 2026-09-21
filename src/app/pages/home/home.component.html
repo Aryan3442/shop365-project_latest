@@ -1,0 +1,169 @@
+<section class="hero-shell">
+  <div class="container hero-panel">
+    <div class="brand-strip">
+      <div class="eyebrow-copy">
+        <span class="mini-kicker">Shop365 Collection</span>
+      </div>
+      <div class="brand-pills">
+        <span>Premium</span>
+        <span>Street</span>
+        <span>Luxury</span>
+        <span>Essentials</span>
+      </div>
+    </div>
+
+    <div class="hero-slider">
+      @for (slide of slides; track slide.title; let i = $index) {
+        <article
+          class="slide-panel"
+          [class.active]="i === currentSlide"
+          [style.background]="slide.bg"
+        >
+          <div class="container slide-layout">
+            <div class="slide-copy animate-hero">
+              <span class="eyebrow" [style.color]="slide.accent">New season drop</span>
+              <h1>{{ slide.title }}</h1>
+              <p>{{ slide.subtitle }}</p>
+
+              <div class="hero-cta">
+                <a [routerLink]="slide.route" class="btn btn-primary">{{ slide.cta }}</a>
+                <a routerLink="/category/her" class="btn btn-outline">Shop Her</a>
+              </div>
+
+              <div class="hero-stats">
+                <div>
+                  <strong>24h</strong>
+                  <span>dispatch</span>
+                </div>
+                <div>
+                  <strong>4.9/5</strong>
+                  <span>client love</span>
+                </div>
+                <div>
+                  <strong>1200+</strong>
+                  <span>happy shoppers</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="showcase animate-hero animate-delay-1">
+              <div class="showcase-card primary-card">
+                <span class="card-tag">Best seller</span>
+                <strong>Limited edition</strong>
+                <small>Crafted for polished everyday style.</small>
+              </div>
+
+              <div class="showcase-card secondary-card">
+                <span class="card-tag">Luxury edit</span>
+                <strong>Refresh your look</strong>
+                <small>Premium wear for every mood</small>
+              </div>
+
+              <div class="floating-tag">Curated picks</div>
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+
+    <div class="slider-controls container">
+      <button class="nav-arrow" type="button" (click)="prevSlide()" [attr.aria-label]="'Previous slide'">‹</button>
+      <div class="dots">
+        @for (slide of slides; track slide.title; let i = $index) {
+          <button class="dot" [class.active]="i === currentSlide" (click)="setSlide(i)" [attr.aria-label]="'Show slide ' + (i + 1)"></button>
+        }
+      </div>
+      <button class="nav-arrow" type="button" (click)="nextSlide()" [attr.aria-label]="'Next slide'">›</button>
+    </div>
+  </div>
+</section>
+
+<section class="container tagline-block">
+  <div class="tagline-wrap animate-in">
+    <p class="tagline-kicker">Shop365</p>
+    <h2>Style that speaks before you do.</h2>
+    <p class="tagline-copy">Premium essentials for him and her — crafted for comfort, confidence, and everyday luxury.</p>
+  </div>
+</section>
+
+<section class="container section feature-strip">
+  <div class="feature-row animate-in">
+    <div class="feature-card">
+      <span class="feature-icon">🚚</span>
+      <div>
+        <strong>Free shipping</strong>
+        <small>On orders over $99</small>
+      </div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔒</span>
+      <div>
+        <strong>Secure checkout</strong>
+        <small>Protected payments with trusted gateways</small>
+      </div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">↩️</span>
+      <div>
+        <strong>Easy returns</strong>
+        <small>Simple 30-day exchanges</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container section spotlight-section">
+  <div class="section-head animate-in">
+    <h2>Curated collections</h2>
+    <p>Style edits for every mood and moment.</p>
+  </div>
+
+  <div class="glass-grid">
+    @for (item of spotlightCategories; track item.name) {
+      <a [routerLink]="item.route" class="glass-card" [style.border-color]="item.accent">
+        <div class="glass-icon" [style.background]="item.accent">{{ item.emoji }}</div>
+        <div class="glass-copy">
+          <span>{{ item.label }}</span>
+          <h3>{{ item.name }}</h3>
+          <p>{{ item.description }}</p>
+        </div>
+      </a>
+    }
+  </div>
+</section>
+
+<section class="container section" id="hot">
+  <div class="section-head animate-in">
+    <h2>Hot selling right now</h2>
+    <p>Best-loved pieces selected for comfort, confidence, and standout style.</p>
+  </div>
+  <div class="grid">
+    @for (p of hotSelling; track p.id) {
+      <app-product-card [product]="p" class="animate-in"></app-product-card>
+    }
+  </div>
+</section>
+
+<section class="container section">
+  <div class="section-head animate-in">
+    <h2>For Him</h2>
+    <a routerLink="/category/him">View all →</a>
+  </div>
+  <div class="grid">
+    @for (p of forHim; track p.id) {
+      <app-product-card [product]="p" class="animate-in"></app-product-card>
+    }
+  </div>
+</section>
+
+<section class="container section">
+  <div class="section-head animate-in">
+    <h2>For Her</h2>
+    <a routerLink="/category/her">View all →</a>
+  </div>
+  <div class="grid">
+    @for (p of forHer; track p.id) {
+      <app-product-card [product]="p" class="animate-in"></app-product-card>
+    }
+  </div>
+</section>
